@@ -11,6 +11,8 @@ Source1:	%{name}.init
 Source2:	%{name}.cron
 Patch:		%{name}-runfrompath.patch
 URL:		ftp://ftp.atcomputing.nl/pub/tools/linux/
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 ExclusiveOS:	Linux
 BuildRoot:	%{tmpdir}/%{name}_linux-%{version}-root-%(id -u -n)
 
