@@ -1,5 +1,5 @@
-Summary:	AT Computing System Activity Report is a sar clone for Linux
-Summary(pl):	Atsar jest odpowiednikiem uniksowego programu sar dla Linuksa
+Summary:	AT Computing System Activity Report - a sar clone for Linux
+Summary(pl):	Atsar - odpowiednik uniksowego programu sar dla Linuksa
 Name:		atsar
 Version:	1.7
 Release:	2
@@ -14,7 +14,7 @@ URL:		ftp://ftp.atcomputing.nl/pub/tools/linux/
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 ExclusiveOS:	Linux
-BuildRoot:	%{tmpdir}/%{name}_linux-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Atsar can be used to measure the load on the most relevant system
