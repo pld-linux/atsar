@@ -6,6 +6,7 @@ Release:	1
 License:	GPL
 Group:		System Environment/Daemons
 Source0:	ftp://ftp.atcomputing.nl/pub/tools/linux/%{name}_linux-%{version}.tar.gz
+# Source0-md5:	2ce51f43f030a609ec12081bb0158b57
 Source1:	%{name}.init
 Source2:	%{name}.cron
 Patch:		%{name}-runfrompath.patch
