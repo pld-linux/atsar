@@ -1,0 +1,12 @@
+diff -rU3 atsar_linux-1.6-vanilla/atsar/atsar.c atsar_linux-1.6/atsar/atsar.c
+--- atsar_linux-1.6-vanilla/atsar/atsar.c	Fri Mar 16 13:33:08 2001
++++ atsar_linux-1.6/atsar/atsar.c	Wed Apr  3 11:09:08 2002
+@@ -329,7 +329,7 @@
+ 				(void) close(fds[0]);
+ 				(void) close(fds[1]);
+ 
+-				execlp(ATEXEC, "atsadc",
++				execlp("atsadc", "atsadc",
+ 						 interval, nsamples, 0);
+ 				perror("exec atsadc");
+ 				exit(1);
