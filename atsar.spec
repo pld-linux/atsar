@@ -41,10 +41,9 @@ wykorzystaniu procesora, dysków, pamiêci (operacyjnej i wymiany),
 %patch -p1
 
 %build
-for r in atsar atsadc \*.o
-  do
-      find -iname $r -exec rm -v {} \;
-  done
+for r in atsar atsadc \*.o do
+	find -iname $r -exec rm -v {} \;
+done
 %{__make}
 
 %install
@@ -52,11 +51,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,/var/log/atsar} \
 	$RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d}
 
-for s in scripts/atsa1 atsar_linux.conf
-  do
-      cat $s | sed -e 's|usr/local/bin|%{_bindir}|g' > sed.$$
-      mv -f sed.$$ $s
-  done
+for s in scripts/atsa1 atsar_linux.conf do
+	cat $s | sed -e 's|usr/local/bin|%{_bindir}|g' > sed.$$
+	mv -f sed.$$ $s
+done
 
 install atsar/atsar atsadc/atsadc scripts/atsa1	\
 	scripts/atsaftp scripts/atsahttp $RPM_BUILD_ROOT%{_bindir}
@@ -73,9 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/atsa1
 /sbin/chkconfig --add atsar
 if [ -f /var/lock/subsys/atsar ]; then
-        /etc/rc.d/init.d/atsar restart 1>&2
+	/etc/rc.d/init.d/atsar restart 1>&2
 else
-        echo "Type \"/etc/rc.d/init.d/atsar start\" to start atsar" 1>&2
+	echo "Type \"/etc/rc.d/init.d/atsar start\" to start atsar" 1>&2
 fi
 
 %preun
