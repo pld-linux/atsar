@@ -1,6 +1,10 @@
+Summary:	AT Computing System Activity Report is a sar clone for Linux
+Summary(pl):	Atsar jest odpowiednikiem uniksowego programu sar dla Linuksa
 Name:		atsar
 Version:	1.6
 Release:	1
+License:	GPL
+Group:		System Environment/Daemons
 Source0:	ftp://ftp.atcomputing.nl/pub/tools/linux/%{name}_linux-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.cron
@@ -8,10 +12,6 @@ Patch:		%{name}-runfrompath.patch
 URL:		ftp://ftp.atcomputing.nl/pub/tools/linux/
 ExclusiveOS:	Linux
 BuildRoot:	%{tmpdir}/%{name}_linux-%{version}-root-%(id -u -n)
-Summary:	AT Computing System Activity Report is a sar clone for Linux
-Summary(pl):	Atsar jest odpowiednikiem uniksowego programu sar dla Linuksa
-License:	GPL
-Group:		System Environment/Daemons
 
 %description
 Atsar can be used to measure the load on the most relevant system
@@ -35,7 +35,6 @@ wykorzystaniu procesora, dysków, pamieci (operacyjnej i wymiany),
 
 %prep
 %setup -q -n %{name}_linux-%{version}
-
 %patch -p1
 
 %build
@@ -46,26 +45,28 @@ for r in atsar atsadc \*.o
 %{__make}
 
 %install
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,/var/log/atsar} \
+	$RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d}
+
 for s in scripts/atsa1 atsar_linux.conf
   do
       cat $s | sed -e 's|usr/local/bin|%{_bindir}|g' > sed.$$
       mv -f sed.$$ $s
   done
-rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}/
+
 install atsar/atsar atsadc/atsadc scripts/atsa1	\
-scripts/atsaftp scripts/atsahttp $RPM_BUILD_ROOT%{_bindir}/
-install -d $RPM_BUILD_ROOT%{_mandir}/man1
-install man/* $RPM_BUILD_ROOT%{_mandir}/man1/
-install -d $RPM_BUILD_ROOT/var/log/atsar
-install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
+	scripts/atsaftp scripts/atsahttp $RPM_BUILD_ROOT%{_bindir}
+install man/* $RPM_BUILD_ROOT%{_mandir}/man1
+
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/atsar
-install -d $RPM_BUILD_ROOT/etc/cron.d
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/atsar
-install  atsar_linux.conf $RPM_BUILD_ROOT%{_sysconfdir}/atsar.conf
+install atsar_linux.conf $RPM_BUILD_ROOT%{_sysconfdir}/atsar.conf
+
+gzip -9nf README
 
 %clean
-rm -rf    $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %post
 /usr/bin/atsa1
@@ -77,17 +78,16 @@ else
 fi
 
 %preun
-if [ $1 = 0 ]; then
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/atsar ]; then
+		/etc/rc.d/init.d/atsar stop
+	fi
 	/sbin/chkconfig --del atsar
 fi
 
-%postun
-rm -f /var/lock/subsys/atsar 2> /dev/null
-
 %files
 %defattr(644,root,root,755)
-%doc README
-
+%doc README.gz
 %attr(755,root,root) %{_bindir}/atsar
 %attr(755,root,root) %{_bindir}/atsadc
 %attr(755,root,root) %{_bindir}/atsa1
@@ -95,7 +95,7 @@ rm -f /var/lock/subsys/atsar 2> /dev/null
 %attr(755,root,root) %{_bindir}/atsahttp
 %{_mandir}/man1/atsar.1*
 %{_mandir}/man1/atsadc.1*
-%attr(755,root,root) %dir /var/log/atsar
-%attr(755,root,root) %config /etc/rc.d/init.d/atsar
-%config /etc/cron.d/atsar
-%config %{_sysconfdir}/atsar.conf
+%dir /var/log/atsar
+%attr(754,root,root) %config /etc/rc.d/init.d/atsar
+%config(noreplace) %verify(not size mtime md5) /etc/cron.d/atsar
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/atsar.conf
