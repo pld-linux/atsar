@@ -63,8 +63,6 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/atsar
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/atsar
 install atsar_linux.conf $RPM_BUILD_ROOT%{_sysconfdir}/atsar.conf
 
-gzip -9nf README
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -87,7 +85,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README.gz
+%doc README
 %attr(755,root,root) %{_bindir}/atsar
 %attr(755,root,root) %{_bindir}/atsadc
 %attr(755,root,root) %{_bindir}/atsa1
