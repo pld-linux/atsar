@@ -48,16 +48,16 @@ cat atsar_linux.conf | sed -e 's|usr/local/bin|%{_bindir}|g' > sed.$$
 mv -f sed.$$ atsar_linux.conf
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}/
-install -m 0755 atsar/atsar atsadc/atsadc scripts/atsa1	\
+install atsar/atsar atsadc/atsadc scripts/atsa1	\
 scripts/atsaftp scripts/atsahttp $RPM_BUILD_ROOT%{_bindir}/
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
-install -m 0644 man/* $RPM_BUILD_ROOT%{_mandir}/man1/
-install -m 0755 -d $RPM_BUILD_ROOT/var/log/atsar
+install man/* $RPM_BUILD_ROOT%{_mandir}/man1/
+install -d $RPM_BUILD_ROOT/var/log/atsar
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
-install -m 0755 %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/atsar
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/atsar
 install -d $RPM_BUILD_ROOT/etc/cron.d
-install -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/atsar
-install -m 0644 atsar_linux.conf $RPM_BUILD_ROOT%{_sysconfdir}/atsar.conf
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/atsar
+install  atsar_linux.conf $RPM_BUILD_ROOT%{_sysconfdir}/atsar.conf
 
 %clean
 rm -rf    $RPM_BUILD_ROOT
@@ -65,7 +65,7 @@ rm -rf    $RPM_BUILD_ROOT
 %post
 /usr/bin/atsa1
 /sbin/chkconfig --add atsar
-if [ -f /etc/atsar.conf ]; then
+if [ -f /var/lock/subsys/atsar ]; then
         /etc/rc.d/init.d/atsar restart 1>&2
 else
         echo "Type \"/etc/rc.d/init.d/atsar start\" to start atsar" 1>&2
@@ -90,7 +90,7 @@ rm -f /var/lock/subsys/atsar 2> /dev/null
 %attr(755,root,root) %{_bindir}/atsahttp
 %{_mandir}/man1/atsar.1*
 %{_mandir}/man1/atsadc.1*
-%dir /var/log/atsar
+%attr(755,root,root) %dir /var/log/atsar
 %attr(755,root,root) %config /etc/rc.d/init.d/atsar
 %config /etc/cron.d/atsar
 %config %{_sysconfdir}/atsar.conf
