@@ -19,7 +19,6 @@ fi
 [ -f /usr/bin/atsadc ] || exit 0
 
 RETVAL=0
-
 # See how we were called.
 case "$1" in
   start)
@@ -40,32 +39,32 @@ case "$1" in
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/atsar
 	else
 		msg_already_running atsar
-		exit 1
 	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/atsar ]; then
 	  	msg_stopping atsar
-		daemon 	rm -f /var/lock/subsys/atsar
-		RETVAL=$?
+		daemon rm -f /var/lock/subsys/atsar
 	else
 		msg_not_running atsar
-		exit 1
 	fi
 	;;
   status)
 	;;
   reload)
+	# to be fixed
 	$0 stop
 	$0 start
+	exit $?
 	;;
-  restart)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL
