@@ -30,7 +30,7 @@ statystyczn±, przydatnych do d³ugoterminowych analiz. Krótkoterminowe
 analizy mog± byæ wykonywane przez bezpo¶rednie uruchomienie programu
 atsar z podaniem parametrów takich jak ilo¶æ próbek i odstêp czasowy
 miêdzy próbkami. Aktualna wersja programu atsar gromadzi informacje o
-wykorzystaniu procesora, dysków, pamieci (operacyjnej i wymiany),
+wykorzystaniu procesora, dysków, pamiêci (operacyjnej i wymiany),
 ³±czy szeregowych i sieci (TCP/IP v4 i v6).
 
 %prep
