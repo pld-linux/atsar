@@ -16,7 +16,7 @@ else
 fi
 
 # Check binaries and configuration files.
-[ -f //usr/bin/atsadc ] || exit 0
+[ -f /usr/bin/atsadc ] || exit 0
 
 RETVAL=0
 
@@ -25,21 +25,23 @@ case "$1" in
   start)
 	# Run atsadc.
 	msg_starting "atsar"
-	daemon //usr/bin/atsadc /var/log/atsar/atsa`date +%d`
+	daemon /usr/bin/atsadc /var/log/atsar/atsa`date +%d`
 	RETVAL=$?
         rm -f /var/log/atsar/ftpstat  2> /dev/null
         rm -f /var/log/atsar/httpstat 2> /dev/null
 
 	if [ -f /etc/atsar.conf ]
 	then
-		//usr/bin/atsaftp
-		//usr/bin/atsahttp
+		/usr/bin/atsaftp
+		/usr/bin/atsahttp
 	fi
 	echo
 	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/atsar
 	;;
   stop)
-	rm -f /var/lock/subsys/atsar
+  	msg_stopping "atsar"
+	daemon 	rm -f /var/lock/subsys/atsar
+	RETVAL=$?
 	;;
   status)
 	;;
