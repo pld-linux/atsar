@@ -3,7 +3,7 @@
 # atsar		This shell script takes care of initializing
 #		the atsar system activity report subsystem.
 #
-# chkconfig: 2345 85 15
+# chkconfig:	2345 85 15
 # description:	Atsar is a system activity report logging system.
 #
 
@@ -43,7 +43,7 @@ case "$1" in
 	;;
   stop)
 	if [ -f /var/lock/subsys/atsar ]; then
-	  	msg_stopping atsar
+		msg_stopping atsar
 		daemon rm -f /var/lock/subsys/atsar
 	else
 		msg_not_running atsar
@@ -51,19 +51,19 @@ case "$1" in
 	;;
   status)
 	;;
-  reload)
-	# to be fixed
-	$0 stop
-	$0 start
-	exit $?
-	;;
+#  reload)
+#	# to be fixed
+#	$0 stop
+#	$0 start
+#	exit $?
+#	;;
   restart|force-reload)
 	$0 stop
 	$0 start
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
 	exit 3
 esac
 
