@@ -23,25 +23,35 @@ RETVAL=0
 # See how we were called.
 case "$1" in
   start)
-	# Run atsadc.
-	msg_starting "atsar"
-	daemon /usr/bin/atsadc /var/log/atsar/atsa`date +%d`
-	RETVAL=$?
-        rm -f /var/log/atsar/ftpstat  2> /dev/null
-        rm -f /var/log/atsar/httpstat 2> /dev/null
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/atsar ]; then
+		# Run atsadc.
+		msg_starting atsar
+		daemon /usr/bin/atsadc /var/log/atsar/atsa`date +%d`
+		RETVAL=$?
+		rm -f /var/log/atsar/ftpstat  2> /dev/null
+		rm -f /var/log/atsar/httpstat 2> /dev/null
 
-	if [ -f /etc/atsar.conf ]
-	then
-		/usr/bin/atsaftp
-		/usr/bin/atsahttp
+		if [ -f /etc/atsar.conf ]; then
+			/usr/bin/atsaftp
+			/usr/bin/atsahttp
+		fi
+		echo
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/atsar
+	else
+		msg_already_running atsar
+		exit 1
 	fi
-	echo
-	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/atsar
 	;;
   stop)
-  	msg_stopping "atsar"
-	daemon 	rm -f /var/lock/subsys/atsar
-	RETVAL=$?
+	if [ -f /var/lock/subsys/atsar ]; then
+	  	msg_stopping atsar
+		daemon 	rm -f /var/lock/subsys/atsar
+		RETVAL=$?
+	else
+		msg_not_running atsar
+		exit 1
+	fi
 	;;
   status)
 	;;
@@ -54,7 +64,7 @@ case "$1" in
 	$0 start
 	;;
   *)
-	echo "Usage: $0 {start|stop|status|reload|restart}"
+	msg_usage "$0 {start|stoprestart|reload|status}"
 	exit 1
 esac
 
