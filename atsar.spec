@@ -41,7 +41,7 @@ wykorzystaniu procesora, dysków, pamiêci (operacyjnej i wymiany),
 %patch -p1
 
 %build
-for r in atsar atsadc \*.o do
+for r in atsar atsadc \*.o ;do
 	find -iname $r -exec rm -v {} \;
 done
 %{__make}
@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,/var/log/atsar} \
 	$RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d}
 
-for s in scripts/atsa1 atsar_linux.conf do
+for s in scripts/atsa1 atsar_linux.conf ;do
 	cat $s | sed -e 's|usr/local/bin|%{_bindir}|g' > sed.$$
 	mv -f sed.$$ $s
 done
