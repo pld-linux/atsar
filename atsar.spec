@@ -9,9 +9,9 @@ Source0:	ftp://ftp.atcomputing.nl/pub/tools/linux/%{name}_linux-%{version}.tar.g
 # Source0-md5:	2aa73a4a99dd176a02c5336889d8b028
 Source1:	%{name}.init
 Source2:	%{name}.cron
-Patch:		%{name}-runfrompath.patch
+Patch0:		%{name}-runfrompath.patch
 URL:		ftp://ftp.atcomputing.nl/pub/tools/linux/
-PreReq:		rc-scripts
+Requires:	rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 ExclusiveOS:	Linux
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -96,5 +96,5 @@ fi
 %{_mandir}/man1/atsadc.1*
 %dir /var/log/atsar
 %attr(754,root,root) %config /etc/rc.d/init.d/atsar
-%config(noreplace) %verify(not size mtime md5) /etc/cron.d/atsar
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/atsar.conf
+%config(noreplace) %verify(not md5 mtime size) /etc/cron.d/atsar
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/atsar.conf
