@@ -11,8 +11,9 @@ Source1:	%{name}.init
 Source2:	%{name}.cron
 Patch0:		%{name}-runfrompath.patch
 URL:		ftp://ftp.atcomputing.nl/pub/tools/linux/
-Requires:	rc-scripts
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 ExclusiveOS:	Linux
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -68,19 +69,12 @@ install atsar_linux.conf $RPM_BUILD_ROOT%{_sysconfdir}/atsar.conf
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/usr/bin/atsa1
-/sbin/chkconfig --add atsar
-if [ -f /var/lock/subsys/atsar ]; then
-	/etc/rc.d/init.d/atsar restart 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/atsar start\" to start atsar" 1>&2
-fi
+%{_bindir}/atsa1
+%service atsar restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/atsar ]; then
-		/etc/rc.d/init.d/atsar stop
-	fi
+	%service atsar stop
 	/sbin/chkconfig --del atsar
 fi
 
