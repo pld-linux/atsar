@@ -1,3 +1,11 @@
+# TODO
+# - cron errors:
+#awk: line 36: regular expression compile failed (bad class -- [], [^] or [)
+#[\[
+#awk: line 36: syntax error at or near ]
+#awk: line 87: regular expression compile failed (bad class -- [], [^] or [)
+#[\[
+#awk: line 87: syntax error at or near ]
 Summary:	AT Computing System Activity Report - a sar clone for Linux
 Summary(pl):	Atsar - odpowiednik uniksowego programu sar dla Linuksa
 Name:		atsar
