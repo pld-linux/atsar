@@ -10,7 +10,7 @@ Summary:	AT Computing System Activity Report - a sar clone for Linux
 Summary(pl):	Atsar - odpowiednik uniksowego programu sar dla Linuksa
 Name:		atsar
 Version:	1.7
-Release:	2
+Release:	3
 License:	GPL
 Group:		Daemons
 Source0:	ftp://ftp.atcomputing.nl/pub/tools/linux/%{name}_linux-%{version}.tar.gz
