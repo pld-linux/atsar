@@ -7,7 +7,7 @@
 #[\[
 #awk: line 87: syntax error at or near ]
 Summary:	AT Computing System Activity Report - a sar clone for Linux
-Summary(pl.UTF-8):   Atsar - odpowiednik uniksowego programu sar dla Linuksa
+Summary(pl.UTF-8):	Atsar - odpowiednik uniksowego programu sar dla Linuksa
 Name:		atsar
 Version:	1.7
 Release:	3
