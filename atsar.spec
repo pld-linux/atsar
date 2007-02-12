@@ -7,7 +7,7 @@
 #[\[
 #awk: line 87: syntax error at or near ]
 Summary:	AT Computing System Activity Report - a sar clone for Linux
-Summary(pl):	Atsar - odpowiednik uniksowego programu sar dla Linuksa
+Summary(pl.UTF-8):   Atsar - odpowiednik uniksowego programu sar dla Linuksa
 Name:		atsar
 Version:	1.7
 Release:	3
@@ -34,16 +34,16 @@ atsar with an interval and a number of samples. The current version of
 atsar gathers statistics about the utilization of CPU's, disks, memory
 and swap, serial lines and network (TCP/IP v4 and v6).
 
-%description -l pl
-Atsar przydaje siê do pomiarów obci±¿enia najbardziej istotnych
-zasobów systemowych, takich jak procesor, dysk, pamiêæ i sieæ. Dziêki
-po³±czeniu z cronem mo¿liwe jest otrzymanie logów z informacj±
-statystyczn±, przydatnych do d³ugoterminowych analiz. Krótkoterminowe
-analizy mog± byæ wykonywane przez bezpo¶rednie uruchomienie programu
-atsar z podaniem parametrów takich jak ilo¶æ próbek i odstêp czasowy
-miêdzy próbkami. Aktualna wersja programu atsar gromadzi informacje o
-wykorzystaniu procesora, dysków, pamiêci (operacyjnej i wymiany),
-³±czy szeregowych i sieci (TCP/IP v4 i v6).
+%description -l pl.UTF-8
+Atsar przydaje siÄ™ do pomiarÃ³w obciÄ…Å¼enia najbardziej istotnych
+zasobÃ³w systemowych, takich jak procesor, dysk, pamiÄ™Ä‡ i sieÄ‡. DziÄ™ki
+poÅ‚Ä…czeniu z cronem moÅ¼liwe jest otrzymanie logÃ³w z informacjÄ…
+statystycznÄ…, przydatnych do dÅ‚ugoterminowych analiz. KrÃ³tkoterminowe
+analizy mogÄ… byÄ‡ wykonywane przez bezpoÅ›rednie uruchomienie programu
+atsar z podaniem parametrÃ³w takich jak iloÅ›Ä‡ prÃ³bek i odstÄ™p czasowy
+miÄ™dzy prÃ³bkami. Aktualna wersja programu atsar gromadzi informacje o
+wykorzystaniu procesora, dyskÃ³w, pamiÄ™ci (operacyjnej i wymiany),
+Å‚Ä…czy szeregowych i sieci (TCP/IP v4 i v6).
 
 %prep
 %setup -q -n %{name}_linux-%{version}
