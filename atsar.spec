@@ -47,7 +47,7 @@ wykorzystaniu procesora, dysków, pamięci (operacyjnej i wymiany),
 
 %prep
 %setup -q -n %{name}_linux-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 for r in atsar atsadc \*.o ;do
